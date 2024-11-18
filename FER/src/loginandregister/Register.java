@@ -94,7 +94,7 @@ public class Register extends javax.swing.JFrame {
                 lblCloseMouseClicked(evt);
             }
         });
-        exit.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 29, -1));
+        exit.add(lblClose, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 10, 29, -1));
 
         lblmin.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lblmin.setText("-");
@@ -104,7 +104,7 @@ public class Register extends javax.swing.JFrame {
                 lblminMouseClicked(evt);
             }
         });
-        exit.add(lblmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 20, 20));
+        exit.add(lblmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 10, 20, 20));
 
         lblTtitle.setBackground(new java.awt.Color(255, 255, 255));
         lblTtitle.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -159,13 +159,11 @@ public class Register extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 363, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(exit, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE)
         );
 
         pack();
