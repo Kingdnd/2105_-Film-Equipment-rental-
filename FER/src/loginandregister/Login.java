@@ -4,15 +4,59 @@
  */
 package loginandregister;
 
+import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 public class Login extends javax.swing.JFrame {
 
     public Login() {
-       initComponents();
-       this.setLocationRelativeTo(null);
+        initComponents();
+        try {
+            Connection();
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setLocationRelativeTo(null);
     }
+
+    // Connection Method
+    Connection con;
+    // SQL Statement
+    Statement st;
+    PreparedStatement pst;
+    // Required for connections
+    private static final String DbName = "fer_users_db";
+    private static final String DbDriver = "com.mysql.cj.jdbc.Driver";
+    private static final String DbUrL = "jdbc:mysql://localhost:3306/" + DbName;
+    private static final String DbUsername = "root";
+    private static final String DbPassword = "";
+
+    public void Connection() throws SQLException {
+        try {
+            Class.forName(DbDriver);
+            // Url, Username, Password
+            con = DriverManager.getConnection(DbUrL, DbUsername, DbPassword);
+            st = con.createStatement();
+            if (con != null) {
+                System.out.println("Connection Successful");
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+          
+       
+            
+          
+       }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -234,21 +278,26 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void bloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bloginActionPerformed
-    String username = txtUname.getText(); // Get the entered username
-    String password = new String(pfPassword.getPassword()); // Get the entered password
-    
-    // Simple check for valid username and password (this could be replaced by database authentication)
-    if (username.isEmpty() || password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Username and password cannot be empty.", "Login Error", JOptionPane.ERROR_MESSAGE);
-    } else if (username.equals("root") && password.equals("root")) {
-        // If the login is successful (hardcoded credentials)
-        JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-       
-    } else {
-        // If the login fails
-        JOptionPane.showMessageDialog(this, "Invalid username or password.", "Login Error", JOptionPane.ERROR_MESSAGE);
-    }
+    String username = txtUname.getText();
+    String password = new String(pfPassword.getPassword());
+    String queryLogin = "SELECT * from register where Username = ? AND Password = ?";  // Use placeholders
 
+    try {
+        // Use PreparedStatement to prevent SQL injection
+        pst = con.prepareStatement(queryLogin);
+        pst.setString(1, username);  // Set username parameter
+        pst.setString(2, password);  // Set password parameter
+        
+        ResultSet rs = pst.executeQuery();
+        if (!rs.next()) {
+            JOptionPane.showMessageDialog(null, "Invalid Credentials!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Login Succesful!");
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
     }//GEN-LAST:event_bloginActionPerformed
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
